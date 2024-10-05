@@ -30,7 +30,7 @@ export default function SignupForm() {
       className="flex flex-col items-center gap-4 space-y-3"
     >
       <div className="w-full flex-1 rounded-xl border bg-white px-6 pb-4 pt-8 shadow-md md:w-96 dark:bg-zinc-950">
-        <h1 className="mb-3 text-2xl font-bold">Sign up for an account!</h1>
+        <h1 className="mb-3 text-2xl font-bold">Faça seu cadastro!</h1>
         <div className="w-full">
           <div>
             <label
@@ -74,8 +74,8 @@ export default function SignupForm() {
       </div>
 
       <Link href="/login" className="flex flex-row gap-1 text-sm text-zinc-400">
-        Already have an account?
-        <div className="font-semibold underline">Log in</div>
+        Já tem uma conta?
+        <div className="font-semibold underline">Log in!</div>
       </Link>
     </form>
   )

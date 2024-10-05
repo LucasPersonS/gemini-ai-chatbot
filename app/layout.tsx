@@ -8,15 +8,16 @@ import { Providers } from '@/components/providers'
 import { Header } from '@/components/header'
 import { Toaster } from '@/components/ui/sonner'
 import { KasadaClient } from '@/lib/kasada/kasada-client'
+import { ThemeToggle } from '@/components/theme-toggle'
+import { ThemeProvider } from 'next-themes';
 
 export const metadata = {
-  metadataBase: new URL('https://gemini.vercel.ai'),
+  metadataBase: new URL('https://www.ogiseguros.com.br/'),
   title: {
-    default: 'Next.js Gemini Chatbot',
-    template: `%s - Next.js Gemini Chatbot`
+    default: 'Ogi Chat - Gemini',
+    template: `%s - Ogi Chat - Gemini`
   },
-  description:
-    'Build your own generative UI chatbot using the Vercel AI SDK and Google Gemini',
+  description: 'Faça sua cotação online, utilizando o AI Chatbot da Ogi Seguros',
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon-16x16.png',
@@ -54,7 +55,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
           disableTransitionOnChange
         >
           <div className="flex flex-col min-h-screen">
-            <Header />
+            <Header>
+              <ThemeToggle />
+            </Header>
             <main className="flex flex-col flex-1">{children}</main>
           </div>
           <TailwindIndicator />

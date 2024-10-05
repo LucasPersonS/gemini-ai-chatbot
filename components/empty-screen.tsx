@@ -5,29 +5,27 @@ export function EmptyScreen() {
     <div className="mx-auto max-w-2xl px-4">
       <div className="flex flex-col gap-2 rounded-2xl bg-zinc-50 sm:p-8 p-4 text-sm sm:text-base">
         <h1 className="text-2xl sm:text-3xl tracking-tight font-semibold max-w-fit inline-block">
-          Next.js Gemini Chatbot
+          OgiChat + Google Gemini
         </h1>
         <p className="leading-normal text-zinc-900">
-          This is an open source AI chatbot app template built with{' '}
-          <ExternalLink href="https://nextjs.org">Next.js</ExternalLink>, the{' '}
+          Esse é um chatbot desenvolvido para fazer cotações online de{' '}
+          <ExternalLink href="https://nextjs.org">SEGUROS</ExternalLink>, Na{' '}
           <ExternalLink href="https://sdk.vercel.ai">
-            Vercel AI SDK
+            Porto Seguro
           </ExternalLink>
-          , and{' '}
+          , e{' '}
           <ExternalLink href="https://ai.google.dev">
-            Google Gemini
+            Outras Seguradoras
           </ExternalLink>
           .
         </p>
         <p className="leading-normal text-zinc-900">
-          It uses{' '}
+          Utilizamos{' '}
           <ExternalLink href="https://vercel.com/blog/ai-sdk-3-generative-ui">
-            React Server Components
+            Google Gemini
           </ExternalLink>{' '}
-          with function calling to mix both text with generative UI responses
-          from Gemini. The UI state is synced through the AI SDK so the model is
-          always aware of your stateful interactions as they happen in the
-          browser.
+          Para gerar respostas fáceis, e rápidas para você! Usamos UI Generativa pra melhorar a sua usabilidade!
+          Quer ver? Faça sua cotação gratuita, abaixo!
         </p>
       </div>
     </div>

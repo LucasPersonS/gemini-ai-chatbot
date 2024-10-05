@@ -69,14 +69,14 @@ export function PromptForm({
         } catch {
           toast(
             <div className="text-red-600">
-              You have reached your message limit! Please try again later, or{' '}
+              Você chegou no seu limite, tente novamente mais tarde! ou{' '}
               <a
                 className="underline"
                 target="_blank"
                 rel="noopener noreferrer"
                 href="https://vercel.com/templates/next.js/gemini-ai-chatbot"
               >
-                deploy your own version
+                Entre em contato
               </a>
               .
             </div>
@@ -139,7 +139,7 @@ export function PromptForm({
           ref={inputRef}
           tabIndex={0}
           onKeyDown={onKeyDown}
-          placeholder="Send a message."
+          placeholder="Enviar mensagem"
           className="min-h-[60px] w-full bg-transparent placeholder:text-zinc-900 resize-none px-4 py-[1.3rem] focus-within:outline-none sm:text-sm"
           autoFocus
           spellCheck={false}

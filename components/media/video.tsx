@@ -12,7 +12,7 @@ export const Video = ({ isLoading }: { isLoading: boolean }) => {
         className={`flex flex-row gap-2 items-center ${isLoading ? 'opacity-100' : 'opacity-0'}`}
       >
         <SpinnerIcon />
-        <div className="text-zinc-500 text-sm">Analyzing video...</div>
+        <div className="text-zinc-500 text-sm">Analisando vídeo...</div>
       </div>
     </div>
   )
