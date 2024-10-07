@@ -26,6 +26,7 @@ import { BoardingPass } from '@/components/flights/boarding-pass'
 import { PurchaseTickets } from '@/components/flights/purchase-ticket'
 import { CheckIcon, SpinnerIcon } from '@/components/ui/icons'
 import { format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
 import { streamText } from 'ai'
 import { google } from '@ai-sdk/google'
 import { GoogleGenerativeAI } from '@google/generative-ai'
@@ -165,18 +166,17 @@ async function submitUserMessage(content: string) {
         model: google('models/gemini-1.5-flash'),
         temperature: 0,
         tools: {
-          showFlights: {
+          mostreSeguradoras: {
             description:
-              "List available flights in the UI. List 3 that match user's query.",
+              "Liste seguradoras disponíveis na UI. Liste 3 que combinam com o query do usuário.",
             parameters: z.object({
               departingCity: z.string(),
-              arrivalCity: z.string(),
-              departingAirport: z.string().describe('Departing airport code'),
-              arrivalAirport: z.string().describe('Arrival airport code'),
+              linha: z.string().describe('O tipo de cobertura do seguro. Exemplo: Básica, Compreensiva, Premium ou Plus.'),
+              grupo: z.string().describe('Companhia de Seguros'),
               date: z
                 .string()
                 .describe(
-                  "Date of the user's flight, example format: 6 April, 1998"
+                  "Data que a cotação está sendo feita, exemplo de formato: 6 de Abril, 1998"
                 )
             })
           },
@@ -197,7 +197,7 @@ async function submitUserMessage(content: string) {
               'Show the UI to choose or change seat for the selected flight.',
             parameters: z.object({
               departingCity: z.string(),
-              arrivalCity: z.string(),
+              linha: z.string(),
               flightCode: z.string(),
               date: z.string()
             })
@@ -223,7 +223,7 @@ async function submitUserMessage(content: string) {
               seat: z.string(),
               date: z
                 .string()
-                .describe('Date of the flight, example format: 6 April, 1998'),
+                .describe('Data do voô, exemplo de formato: 10 de Abril, 2024'),
               gate: z.string()
             })
           },
@@ -234,32 +234,30 @@ async function submitUserMessage(content: string) {
               flightCode: z.string(),
               date: z.string(),
               departingCity: z.string(),
-              departingAirport: z.string(),
+              grupo: z.string(),
               departingAirportCode: z.string(),
               departingTime: z.string(),
-              arrivalCity: z.string(),
-              arrivalAirport: z.string(),
+              linha: z.string(),
               arrivalAirportCode: z.string(),
-              arrivalTime: z.string()
+              tempoCotacaoFinal: z.string()
             })
           }
         },
         system: `\
-      You are a friendly assistant that helps the user with booking flights to destinations that are based on a list of books. You can you give travel recommendations based on the books, and will continue to help the user book a flight to their destination.
-  
-      The date today is ${format(new Date(), 'd LLLL, yyyy')}. 
-      The user's current location is San Francisco, CA, so the departure city will be San Francisco and airport will be San Francisco International Airport (SFO). The user would like to book the flight out on May 12, 2024.
+      Você é um assistente amigável que ajuda o usuário a assinar planos de seguro automóvel, baseado na requisição do usuário. Você pode dar recomendações de seguros com base no carro ou necessidade do usuário e continuará ajudando o usuário a assinar um seguro para o carro escolhido.
 
-      List United Airlines flights only.
-      
-      Here's the flow: 
-        1. List holiday destinations based on a collection of books.
-        2. List flights to destination.
-        3. Choose a flight.
-        4. Choose a seat.
-        5. Choose hotel
-        6. Purchase booking.
-        7. Show boarding pass.
+A data de hoje é ${format(new Date(), "d 'de' LLLL, yyyy", { locale: ptBR})}. A localização atual do usuário é São Paulo, e ele quer fazer a cotação para um Ford Ecosport. O usuário deseja fazer a cotação de um seguro hoje, formate a data em português.
+
+Liste apenas seguros do grupo Porto Seguro.
+
+Aqui está o fluxo:
+
+Mostrar os destinos.
+Listar seguradoras de automóvel com as coberturas. Exemplo: Premium, Economico, etc.
+Escolher uma seguradora.
+Escolher um plano da seguradora.
+Finalizar e assinar o plano.
+Mostrar o cartão de assinante.
       `,
         messages: [...history]
       })
@@ -317,7 +315,7 @@ async function submitUserMessage(content: string) {
                 }
               ]
             })
-          } else if (toolName === 'showFlights') {
+          } else if (toolName === 'mostreSeguradoras') {
             aiState.done({
               ...aiState.get(),
               interactions: [],
@@ -327,9 +325,9 @@ async function submitUserMessage(content: string) {
                   id: nanoid(),
                   role: 'assistant',
                   content:
-                    "Here's a list of flights for you. Choose one and we can proceed to pick a seat.",
+                    "Aqui está a lista das seguradoras para você. Escolha uma e prossiga para a cotação.",
                   display: {
-                    name: 'showFlights',
+                    name: 'mostreSeguradoras',
                     props: {
                       summary: args
                     }
@@ -439,13 +437,13 @@ async function submitUserMessage(content: string) {
                 {
                   id: nanoid(),
                   role: 'assistant',
-                  content: `The flight status of ${args.flightCode} is as follows:
-                Departing: ${args.departingCity} at ${args.departingTime} from ${args.departingAirport} (${args.departingAirportCode})
+                  content: `O status do seguro ${args.flightCode} é o seguinte:
+                Data: ${args.departingTime} from ${args.grupo} e (${args.linha})
                 `
                 }
               ],
               display: {
-                name: 'showFlights',
+                name: 'mostreSeguradoras',
                 props: {
                   summary: args
                 }
@@ -655,7 +653,7 @@ export const getUIStateFromAIState = (aiState: Chat) => {
       id: `${aiState.chatId}-${index}`,
       display:
         message.role === 'assistant' ? (
-          message.display?.name === 'showFlights' ? (
+          message.display?.name === 'mostreSeguradoras' ? (
             <BotCard>
               <ListFlights summary={message.display.props.summary} />
             </BotCard>

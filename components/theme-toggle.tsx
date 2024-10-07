@@ -6,18 +6,15 @@ import { Button } from '@/components/ui/button';
 
 export function ThemeToggle() {
   const { setTheme, theme } = useTheme();
-  const [_, startTransition] = React.useTransition();
 
   return (
     <Button
       variant="ghost"
       size="icon"
       onClick={() => {
-        startTransition(() => {
-          const newTheme = theme === 'light' ? 'dark' : 'light';
-          console.log(`Mudando tema para: ${newTheme}`); // Adicionando log aqui
-          setTheme(newTheme);
-        });
+        const newTheme = theme === 'light' ? 'dark' : 'light';
+        console.log(`Mudando tema para: ${newTheme}`); // Log para depuração
+        setTheme(newTheme);
       }}
     >
       {theme === 'dark' ? (

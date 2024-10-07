@@ -50,7 +50,7 @@ export function ChatPanel({
   ]
 
   return (
-    <div className="fixed inset-x-0 bg-white/90 bottom-0 w-full duration-300 ease-in-out peer-[[data-state=open]]:group-[]:lg:pl-[250px] peer-[[data-state=open]]:group-[]:xl:pl-[300px] dark:from-10%">
+    <div className="fixed inset-x-0 bg-gradient-to-b from-white to-gray-300 bottom-0 w-full pt-10 duration-300 ease-in-out peer-[[data-state=open]]:group-[]:lg:pl-[250px] peer-[[data-state=open]]:group-[]:xl:pl-[300px] dark:from-30%">
       <ButtonScrollToBottom
         isAtBottom={isAtBottom}
         scrollToBottom={scrollToBottom}
@@ -63,7 +63,7 @@ export function ChatPanel({
               <div
                 key={example.heading}
                 className={cn(
-                  'cursor-pointer bg-zinc-50 text-zinc-950 rounded-2xl p-4 sm:p-6 hover:bg-zinc-100 transition-colors',
+                  'cursor-pointer bg-white text-zinc-750 rounded-2xl p-4 sm:p-6 hover:bg-zinc-50 transition-colors',
                   index > 1 && 'hidden md:block'
                 )}
                 onClick={async () => {

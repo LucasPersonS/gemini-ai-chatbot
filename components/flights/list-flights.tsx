@@ -4,35 +4,33 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { useActions, useUIState } from 'ai/rsc'
+import { Star } from 'lucide-react'
 
 interface Flight {
   id: number
-  airlines: string
-  departureTime: string
-  arrivalTime: string
-  price: number
+  avaliacao: string
+  seguradoraNome: string
+  tempoCotacaoFinal: string
+  CNPJ: string
+  logoUrl: string
 }
 
 interface ListFlightsProps {
   summary: {
-    arrivalCity: string
-    departingCity: string
-    arrivalAirport: string
-    departingAirport: string
+    linha: string
+    grupo: string
     date: string
   }
 }
 
 export const ListFlights = ({
   summary = {
-    arrivalCity: 'San Francisco',
-    departingCity: 'New York City',
-    arrivalAirport: 'SFO',
-    departingAirport: 'JFK',
-    date: '2021-12-25'
+    linha: 'Premium',
+    grupo: 'Porto Seguro',
+    date: '2024-10-31'
   }
 }: ListFlightsProps) => {
-  const { arrivalCity, departingCity, arrivalAirport, departingAirport, date } =
+  const { linha, grupo, date } =
     summary
   const { submitUserMessage } = useActions()
   const [_, setMessages] = useUIState()
@@ -40,91 +38,98 @@ export const ListFlights = ({
   const flights = [
     {
       id: 1,
-      airlines: 'United Airlines',
-      departureTime: '8:30 PM',
-      arrivalTime: '4:20 PM+1',
-      price: 531
+      avaliacao: '5.0 estrelas',
+      seguradoraNome: 'Porto Seguros',
+      CNPJ: '61.198.164/0001-60',
+      logoUrl: 'https://play-lh.googleusercontent.com/9AXivDxUm2lyogDCW9BIe5E3sMm_jqT6T_kCTJQxZ5A6AXI1dfjOwfpu-p6jH_i9ja4'
     },
     {
       id: 2,
-      airlines: 'United Airlines',
-      departureTime: '2:40 PM',
-      arrivalTime: '10:25 AM+1',
-      price: 564
+      avaliacao: '4.7 estrelas',
+      seguradoraNome: 'Azul Seguros',
+      CNPJ: '33.448.150/0001-11',
+      logoUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRlyS8fiNCY-_tnAlDF4Eh_Ou-qIxfKNnXRA&s'
     },
     {
       id: 3,
-      airlines: 'United Airlines',
-      departureTime: '3:00 PM',
-      arrivalTime: '10:50 AM+1',
-      price: 611
+      avaliacao: '4.3 estrelas',
+      seguradoraNome: 'Itaú Seguros',
+      CNPJ: '61.557.039/0001-07',
+      logoUrl: 'https://seeklogo.com/images/I/Itau-logo-C9E851CC19-seeklogo.com.png'
+    },
+    {
+      id: 4,
+      avaliacao: '4.1 estrelas',
+      seguradoraNome: 'Mitsui Seguros',
+      CNPJ: '33.016.221/0001-07',
+      logoUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcv84wDzCxNmIeZLFKvBsvibk_W8DFHl3yVg&s'
     }
   ]
 
   return (
-    <div className="grid gap-2 rounded-2xl border border-zinc-200 bg-white p-2 sm:p-4">
-      <div className="grid gap-2 sm:flex sm:flex-row justify-between border-b p-2">
+    <div className="grid gap-2 rounded-2xl border border-zinc-200 bg-white p-4 sm:p-4">
+      <div className="grid gap-2 sm:flex sm:flex-row justify-between border-b p-2 bg-gradient-to-r from-purple-500 to-purple-700 rounded-lg">
         <div className="sm:basis-1/4">
-          <div className="text-xs text-zinc-600">Departure</div>
-          <div className="font-medium">{departingCity}</div>
+          <div className="text-xs text-white">Grupo</div>
+          <div className="font-medium text-white">{grupo}</div>
         </div>
         <div className="sm:basis-1/4">
-          <div className="text-xs text-zinc-600">Arrival</div>
-          <div className="font-medium">{arrivalCity}</div>
+          <div className="text-xs text-white">Linha</div>
+          <div className="font-medium text-white">{linha}</div>
         </div>
         <div className="sm:basis-1/2">
-          <div className="sm:text-right text-xs text-zinc-600">Date</div>
-          <div className="sm:text-right font-medium">{date}</div>
+          <div className="sm:text-right text-xs text-white">Data</div>
+          <div className="sm:text-right font-medium text-white">{date}</div>
         </div>
       </div>
       <div className="grid gap-3">
         {flights &&
           flights.map(flight => (
-            <div
-              key={flight.id}
-              className="flex cursor-pointer flex-row items-start sm:items-center gap-4 rounded-xl p-2 hover:bg-zinc-50"
-              onClick={async () => {
-                const response = await submitUserMessage(
-                  `The user has selected flight ${flight.airlines}, departing at ${flight.departureTime} and arriving at ${flight.arrivalTime} for $${flight.price}. Now proceeding to select seats.`
-                )
-                setMessages((currentMessages: any[]) => [
-                  ...currentMessages,
-                  response
-                ])
-              }}
-            >
-              <div className="w-10 sm:w-12 shrink-0 aspect-square rounded-lg bg-zinc-50 overflow-hidden">
-                <img
-                  src="https://www.gstatic.com/flights/airline_logos/70px/UA.png"
-                  className="object-cover aspect-square"
-                  alt="airline logo"
-                />
-              </div>
-              <div className="grid gap-4 sm:grid-cols-4 items-start sm:gap-6 flex-1">
-                <div className="col-span-2">
-                  <div className="font-medium">
-                    {flight.departureTime} - {flight.arrivalTime}
-                  </div>
-                  <div className="text-sm text-zinc-600">{flight.airlines}</div>
-                </div>
-                <div>
-                  <div className="font-medium">
-                    {flight.id === 2 ? '10hr 50min' : '10hr 45min'}
-                  </div>
-                  <div className="text-sm text-zinc-600">
-                    {departingAirport} - {arrivalAirport}
-                  </div>
-                </div>
-                <div>
-                  <div className="sm:text-right font-medium font-mono">
-                    ${flight.price}
-                  </div>
-                  <div className="sm:text-right text-xs text-zinc-600">
-                    One Way
-                  </div>
-                </div>
-              </div>
-            </div>
+<div
+  key={flight.id}
+  className="flex cursor-pointer flex-row items-start sm:items-center gap-4 rounded-xl p-3 hover:bg-zinc-50 group relative"
+  onClick={async () => {
+    const response = await submitUserMessage(
+      `The user has selected flight ${flight.avaliacao}, departing at ${flight.seguradoraNome} with ID of travel number ${flight.CNPJ}. Now proceeding to select seats.`
+    )
+    setMessages((currentMessages: any[]) => [
+      ...currentMessages,
+      response
+    ])
+  }}
+>
+  <div className="w-10 sm:w-12 shrink-0 aspect-square rounded-lg bg-zinc-50 overflow-hidden">
+    <img
+      src={flight.logoUrl}
+      className="object-cover aspect-square"
+      alt={`${flight.avaliacao} logo`}
+    />
+  </div>
+  <div className="grid gap-2 sm:grid-cols-4 items-center sm:gap-1 flex-1">
+    <div className="col-span-2">
+      <div className="font-medium">{flight.seguradoraNome}</div>
+      <div className="flex items-center text-sm text-zinc-600">
+        {flight.avaliacao}
+        <Star className="ml-1 size-4 text-yellow-500" fill="currentColor" />
+      </div>
+    </div>
+    <div>
+      <div className="font-medium">Grupo</div>
+      <div className="text-sm text-zinc-600">{grupo}</div>
+    </div>
+    <div className="flex flex-col items-center">
+      <div
+        className="sm:text-center font-mono text-md truncate max-w-[100px] overflow-hidden relative transition-all duration-300 ease-in-out hover:max-w-full hover:overflow-visible"
+      >
+        {flight.CNPJ}
+        <div className="absolute top-0 left-0 mt-6 w-auto px-2 py-1 bg-gray-100 text-black text-sm rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          {flight.CNPJ}
+        </div>
+      </div>
+      <div className="sm:text-center text-xs text-zinc-600">CNPJ</div>
+    </div>
+  </div>
+</div>
           ))}
       </div>
     </div>

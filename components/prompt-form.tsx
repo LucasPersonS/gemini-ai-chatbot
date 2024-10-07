@@ -74,7 +74,7 @@ export function PromptForm({
                 className="underline"
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://vercel.com/templates/next.js/gemini-ai-chatbot"
+                href="https://vercel.com/templates/next.js/gemini-ai-chatbot" 
               >
                 Entre em contato
               </a>
@@ -118,9 +118,9 @@ export function PromptForm({
           }
         }}
       />
-      <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-zinc-100 px-12 sm:rounded-full sm:px-12">
-        {/* <Tooltip>
-          <TooltipTrigger asChild> */}
+      <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-white px-12 sm:rounded-full sm:px-12">
+         <Tooltip>
+          <TooltipTrigger asChild>
         <Button
           variant="outline"
           size="icon"
@@ -130,11 +130,11 @@ export function PromptForm({
           }}
         >
           <IconPlus />
-          <span className="sr-only">New Chat</span>
+          <span className="sr-only">Novo Chat</span>
         </Button>
-        {/* </TooltipTrigger>
-          <TooltipContent>Add Attachments</TooltipContent>
-        </Tooltip> */}
+        </TooltipTrigger>
+          <TooltipContent>Anexe Arquivos</TooltipContent>
+        </Tooltip>
         <Textarea
           ref={inputRef}
           tabIndex={0}
@@ -157,13 +157,13 @@ export function PromptForm({
                 type="submit"
                 size="icon"
                 disabled={input === ''}
-                className="bg-transparent shadow-none text-zinc-950 rounded-full hover:bg-zinc-200"
+                className="bg-transparent shadow-none text-gray-400 rounded-full hover:bg-purple-200"
               >
                 <IconArrowElbow />
-                <span className="sr-only">Send message</span>
+                <span className="sr-only">Enviar mensagem</span>
               </Button>
             </TooltipTrigger>
-            <TooltipContent>Send message</TooltipContent>
+            <TooltipContent>Enviar mensagem</TooltipContent>
           </Tooltip>
         </div>
       </div>

@@ -1,26 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
-/* globals.css */
-body {
-  transition: background-color 0.3s, color 0.3s;
-}
-
-body.light {
-  background-color: white;
-  color: black;
-}
-
-body.dark {
-  background-color: black;
-  color: white;
-}
 
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 10 15% 100%;
     --foreground: 240 10% 3.9%;
 
     --card: 0 0% 100%;
