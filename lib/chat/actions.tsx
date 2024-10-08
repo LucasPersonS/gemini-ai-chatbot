@@ -181,7 +181,7 @@ async function submitUserMessage(content: string) {
           },
           mostrarForms: {
             description:
-              'Mostre a UI para o usuário fazer o formulário com seus dados, exemplo: Nome, Telefone, CPF, etc',
+              'Mostra a UI para o usuário fazer o formulário do seguro.',
             parameters: z.object({
               logoUrl: z.string().describe(
                 'URL da logo da empresa que o usuário selecionou, Porto Seguro: https://play-lh.googleusercontent.com/9AXivDxUm2lyogDCW9BIe5E3sMm_jqT6T_kCTJQxZ5A6AXI1dfjOwfpu-p6jH_i9ja4, Mitsui: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcv84wDzCxNmIeZLFKvBsvibk_W8DFHl3yVg&s, Itaú: https://seeklogo.com/images/I/Itau-logo-C9E851CC19-seeklogo.com.png, Azul Seguros: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRlyS8fiNCY-_tnAlDF4Eh_Ou-qIxfKNnXRA&s'
