@@ -92,7 +92,7 @@ export const ListFlights = ({
   className="flex cursor-pointer flex-row items-start sm:items-center gap-4 rounded-xl p-3 hover:bg-zinc-50 group relative"
   onClick={async () => {
     const response = await submitUserMessage(
-      `O usuário escolheu a seguradora com a avalição de ${flight.avaliacao}, com o nome ${flight.seguradoraNome} e o número de registro CNPJ de: ${flight.CNPJ}. Agora por favor, mostre a UI de formulário ao usuário.`
+      `O usuário escolheu a seguradora com a avalição de ${flight.avaliacao}, com o nome ${flight.seguradoraNome} e o número de registro CNPJ de: ${flight.CNPJ}. Agora por favor, mostre a INTERFACE DO USUÁRIO de formulário ao usuário.`
     )
     setMessages((currentMessages: any[]) => [
       ...currentMessages,
