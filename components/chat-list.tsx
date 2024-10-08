@@ -28,7 +28,7 @@ export function ChatList({ messages, session, isShared }: ChatList) {
                 <Link href="/signup" className="underline underline-offset-4">
                   cadastre-se
                 </Link>{' '}
-               Para salvar seu histórico de chat!
+               Para salvarr seu histórico de chat!
               </p>
             </div>
           </div>
