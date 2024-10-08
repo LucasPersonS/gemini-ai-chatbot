@@ -20,7 +20,7 @@ import { SpinnerMessage, UserMessage } from '@/components/stocks/message'
 import { Chat } from '../types'
 import { auth } from '@/auth'
 import { FlightStatus } from '@/components/flights/flight-status'
-import { SelectSeats } from '@/components/flights/select-seats'
+import { Formulario } from '@/components/flights/select-seats'
 import { ListFlights } from '@/components/flights/mostrarSeguradoras'
 import { BoardingPass } from '@/components/flights/boarding-pass'
 import { PurchaseTickets } from '@/components/flights/purchase-ticket'
@@ -326,7 +326,7 @@ Mostrar o cartão de assinante.
 
             uiStream.update(
               <BotCard>
-                <SelectSeats summary={args} />
+                <Formulario summary={args} />
               </BotCard>
             )
           } else if (toolName === 'showHotels') {
@@ -621,7 +621,7 @@ export const getUIStateFromAIState = (aiState: Chat) => {
             </BotCard>
           ) : message.display?.name === 'showSeatPicker' ? (
             <BotCard>
-              <SelectSeats summary={message.display.props.summary} />
+              <Formulario summary={message.display.props.summary} />
             </BotCard>
           ) : message.display?.name === 'showHotels' ? (
             <BotCard>

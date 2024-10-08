@@ -6,7 +6,7 @@ import { useAIState, useActions, useUIState } from 'ai/rsc';
 import { useState } from 'react';
 import { SparklesIcon } from '../ui/icons';
 
-interface SelectSeatsProps {
+interface FormularioProps {
   summary: {
     seguradoraNome: string;
     linha: string;
@@ -21,14 +21,14 @@ export const suggestions = [
   'Cotar com outra seguradora',
 ];
 
-export const SelectSeats = ({
+export const Formulario = ({
   summary = {
     seguradoraNome: 'Porto Seguro',
     linha: 'Premium',
     date: '23 de março, 2024',
     logoUrl: 'https://play-lh.googleusercontent.com/9AXivDxUm2lyogDCW9BIe5E3sMm_jqT6T_kCTJQxZ5A6AXI1dfjOwfpu-p6jH_i9ja4',
   },
-}: SelectSeatsProps) => {
+}: FormularioProps) => {
   const availableSeats = ['SIM!'];
   const [aiState, setAIState] = useAIState();
   const [selectedOption, setSelectedOption] = useState('');
