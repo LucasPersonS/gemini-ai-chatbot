@@ -65,8 +65,8 @@ export const SelectSeats = ({
     <div className="grid gap-4">
       <div className="grid gap-4 p-4 sm:p-6 border border-gray-200 rounded-xl bg-white shadow-md">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 shrink-0 rounded-full overflow-hidden border border-gray-300">
-            <img src={logoUrl} className="object-cover w-full h-full" />
+          <div className="size-12 shrink-0 rounded-full overflow-hidden border border-gray-300">
+            <img src={logoUrl} className="object-cover size-full" />
           </div>
           <div>
             <div className="font-semibold text-lg text-gray-800">{seguradoraNome}</div>
