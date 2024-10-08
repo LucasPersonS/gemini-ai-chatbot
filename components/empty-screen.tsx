@@ -9,19 +9,19 @@ export function EmptyScreen() {
         </h1>
         <p className="leading-normal text-zinc-900">
           Esse é um chatbot desenvolvido para fazer cotações online de{' '}
-          <ExternalLink href="https://nextjs.org">SEGUROS</ExternalLink>, Na{' '}
-          <ExternalLink href="https://sdk.vercel.ai">
+          <ExternalLink href="https://www.ogiseguros.com.br/seguro-auto/">SEGUROS</ExternalLink>, Na{' '}
+          <ExternalLink href="https://www.portoseguro.com.br/">
             Porto Seguro
           </ExternalLink>
           , e{' '}
-          <ExternalLink href="https://ai.google.dev">
+          <ExternalLink href="https://www.ogiseguros.com.br/seguros/">
             Outras Seguradoras
           </ExternalLink>
           .
         </p>
         <p className="leading-normal text-zinc-900">
           Utilizamos{' '}
-          <ExternalLink href="https://vercel.com/blog/ai-sdk-3-generative-ui">
+          <ExternalLink href="https://ai.google.dev">
             Google Gemini
           </ExternalLink>{' '}
           Para gerar respostas fáceis, e rápidas para você! Usamos UI Generativa pra melhorar a sua usabilidade!

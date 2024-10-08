@@ -167,28 +167,25 @@ async function submitUserMessage(content: string) {
         temperature: 0,
         tools: {
           mostreSeguradoras: {
-            description:
-              "Liste seguradoras disponíveis na UI. Liste 3 que combinam com o query do usuário.",
+            description: "Liste as seguradoras de automóveis disponíveis, incluindo pelo menos três opções.",
             parameters: z.object({
-              linha: z.string().describe('O tipo de cobertura do seguro. Exemplo: Básica, Compreensiva, Premium ou Plus.'),
-              grupo: z.string().describe('Grupo que a companhia de seguro faz parte'),
-              date: z
-                .string()
-                .describe(
-                  "Data que a cotação está sendo feita, exemplo de formato: 6 de Abril, 1998"
-                )
+              linha: z.string().describe("Tipo de cobertura do seguro (por exemplo: Básica, Compreensiva, Premium)."),
+              grupo: z.string().describe("Grupo de seguradoras a que a companhia pertence."),
+              date: z.string().describe("Data da cotação, no formato: 6 de Abril, 1998.")
             })
           },
           mostrarForms: {
-            description:
-              'Mostra a UI para o usuário fazer o formulário do seguro.',
+            description: "Apresente a interface dos formulário para a cotação de seguro.",
             parameters: z.object({
-              logoUrl: z.string().describe(
-                'URL da logo da empresa que o usuário selecionou, Porto Seguro: https://play-lh.googleusercontent.com/9AXivDxUm2lyogDCW9BIe5E3sMm_jqT6T_kCTJQxZ5A6AXI1dfjOwfpu-p6jH_i9ja4, Mitsui: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcv84wDzCxNmIeZLFKvBsvibk_W8DFHl3yVg&s, Itaú: https://seeklogo.com/images/I/Itau-logo-C9E851CC19-seeklogo.com.png, Azul Seguros: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRlyS8fiNCY-_tnAlDF4Eh_Ou-qIxfKNnXRA&s'
-              ),
-              date: z.string(),
-              seguradoraNome: z.string(),
-              linha: z.string(),
+              logoUrl: z.string().describe(`URL da logo da seguradora selecionada.
+              Porto Seguro: https://play-lh.googleusercontent.com/9AXivDxUm2lyogDCW9BIe5E3sMm_jqT6T_kCTJQxZ5A6AXI1dfjOwfpu-p6jH_i9ja4
+              Azul Seguros: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRlyS8fiNCY-_tnAlDF4Eh_Ou-qIxfKNnXRA&s
+              Itaú Seguros: https://seeklogo.com/images/I/Itau-logo-C9E851CC19-seeklogo.com.png
+              Mitsui Seguros: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcv84wDzCxNmIeZLFKvBsvibk_W8DFHl3yVg&s
+              `),
+              date: z.string().describe("Data da cotação."),
+              seguradoraNome: z.string().describe("Nome da seguradora escolhida."),
+              linha: z.string().describe("Tipo de cobertura solicitado.")
             })
           },
           showHotels: {
@@ -238,10 +235,10 @@ async function submitUserMessage(content: string) {
 A data de hoje é ${format(new Date(), "d 'de' LLLL, yyyy", { locale: ptBR})}. A localização atual do usuário é São Paulo, e ele quer fazer a cotação de seguro automóvel. O usuário deseja fazer a cotação de um seguro hoje. Formate a data em português.
 
 (Utilize emojis e negritos.)
-
+Caso o usuário enviar mensagens pedindo para fazer cotações e/ou orçamento, não faça perguntas, apenas mostre a tool \`mostreSeguradoras\`
 Liste apenas seguradoras do grupo Porto Seguros.
-Aqui está o fluxo:
 
+Aqui está o fluxo:
 Listar seguradoras de automóvel.
 Escolher uma seguradora.
 Fazer o formulário com os dados.

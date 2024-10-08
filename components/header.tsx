@@ -65,7 +65,7 @@ export function Header({ children }: HeaderProps) {
         <Button asChild size="sm" variant="ghost">
           <a
             target="_blank"
-            href="https://github.com/vercel-labs/gemini-chatbot"
+            href="https://www.instagram.com/ogiseguros/"
             rel="noopener noreferrer"
           >
             <IconInstagram className="size-6 text-gray-800" />

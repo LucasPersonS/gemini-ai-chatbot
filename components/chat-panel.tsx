@@ -40,7 +40,7 @@ export function ChatPanel({
     {
       heading: 'Faça sua cotação',
       subheading: 'Escolha a sua corretora preferida',
-      message: `Quero fazer uma cotação`
+      message: `Quero fazer uma cotação de seguro`
     },
     {
       heading: 'Atendimento online',

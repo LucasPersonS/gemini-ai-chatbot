@@ -15,9 +15,9 @@ export const metadata = {
   metadataBase: new URL('https://www.ogiseguros.com.br/'),
   title: {
     default: 'Ogi Chat - Gemini',
-    template: `%s - Ogi Chat - Gemini`
+    template: `%s`
   },
-  description: 'Faça sua cotação online, utilizando o AI Chatbot da Ogi Seguros',
+  description: 'Faça sua cotação automóvel online, utilizando o Chatbot com Inteligência Artificial da Ogi Seguros',
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon-16x16.png',
