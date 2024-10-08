@@ -2,7 +2,7 @@
 
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
-
+import { useState } from 'react'
 import { useActions, useUIState } from 'ai/rsc'
 import { Star } from 'lucide-react'
 
@@ -20,6 +20,7 @@ interface ListFlightsProps {
     linha: string
     grupo: string
     date: string
+    logoUrl: string
   }
 }
 
@@ -27,7 +28,8 @@ export const ListFlights = ({
   summary = {
     linha: 'Premium',
     grupo: 'Porto Seguro',
-    date: '2024-10-31'
+    date: '2024-10-31',
+    logoUrl: 'https://play-lh.googleusercontent.com/9AXivDxUm2lyogDCW9BIe5E3sMm_jqT6T_kCTJQxZ5A6AXI1dfjOwfpu-p6jH_i9ja4'
   }
 }: ListFlightsProps) => {
   const { linha, grupo, date } =
@@ -90,7 +92,7 @@ export const ListFlights = ({
   className="flex cursor-pointer flex-row items-start sm:items-center gap-4 rounded-xl p-3 hover:bg-zinc-50 group relative"
   onClick={async () => {
     const response = await submitUserMessage(
-      `The user has selected flight ${flight.avaliacao}, departing at ${flight.seguradoraNome} with ID of travel number ${flight.CNPJ}. Now proceeding to select seats.`
+      `O usuário escolheu a seguradora com a avalição de ${flight.avaliacao}, com o nome ${flight.seguradoraNome} e o número de registro CNPJ de: ${flight.CNPJ}. Agora por favor, prossiga para o formulário com os dados do usuário`
     )
     setMessages((currentMessages: any[]) => [
       ...currentMessages,

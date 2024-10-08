@@ -21,7 +21,7 @@ import { Chat } from '../types'
 import { auth } from '@/auth'
 import { FlightStatus } from '@/components/flights/flight-status'
 import { SelectSeats } from '@/components/flights/select-seats'
-import { ListFlights } from '@/components/flights/list-flights'
+import { ListFlights } from '@/components/flights/mostrarSeguradoras'
 import { BoardingPass } from '@/components/flights/boarding-pass'
 import { PurchaseTickets } from '@/components/flights/purchase-ticket'
 import { CheckIcon, SpinnerIcon } from '@/components/ui/icons'
@@ -170,9 +170,8 @@ async function submitUserMessage(content: string) {
             description:
               "Liste seguradoras disponíveis na UI. Liste 3 que combinam com o query do usuário.",
             parameters: z.object({
-              departingCity: z.string(),
               linha: z.string().describe('O tipo de cobertura do seguro. Exemplo: Básica, Compreensiva, Premium ou Plus.'),
-              grupo: z.string().describe('Companhia de Seguros'),
+              grupo: z.string().describe('Grupo que a companhia de seguro faz parte'),
               date: z
                 .string()
                 .describe(
@@ -180,26 +179,16 @@ async function submitUserMessage(content: string) {
                 )
             })
           },
-          listDestinations: {
-            description: 'List destinations to travel cities, max 5.',
-            parameters: z.object({
-              destinations: z.array(
-                z
-                  .string()
-                  .describe(
-                    'List of destination cities. Include rome as one of the cities.'
-                  )
-              )
-            })
-          },
-          showSeatPicker: {
+          mostrarForms: {
             description:
-              'Show the UI to choose or change seat for the selected flight.',
+              'Mostre a UI para o usuário fazer o formulário com seus dados, exemplo: Nome, Telefone, CPF, etc',
             parameters: z.object({
-              departingCity: z.string(),
+              logoUrl: z.string().describe(
+                'URL da logo da empresa que o usuário selecionou, Porto Seguro: https://play-lh.googleusercontent.com/9AXivDxUm2lyogDCW9BIe5E3sMm_jqT6T_kCTJQxZ5A6AXI1dfjOwfpu-p6jH_i9ja4, Mitsui: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcv84wDzCxNmIeZLFKvBsvibk_W8DFHl3yVg&s, Itaú: https://seeklogo.com/images/I/Itau-logo-C9E851CC19-seeklogo.com.png, Azul Seguros: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRlyS8fiNCY-_tnAlDF4Eh_Ou-qIxfKNnXRA&s'
+              ),
+              date: z.string(),
+              seguradoraNome: z.string(),
               linha: z.string(),
-              flightCode: z.string(),
-              date: z.string()
             })
           },
           showHotels: {
@@ -246,15 +235,15 @@ async function submitUserMessage(content: string) {
         system: `\
       Você é um assistente amigável que ajuda o usuário a assinar planos de seguro automóvel, baseado na requisição do usuário. Você pode dar recomendações de seguros com base no carro ou necessidade do usuário e continuará ajudando o usuário a assinar um seguro para o carro escolhido.
 
-A data de hoje é ${format(new Date(), "d 'de' LLLL, yyyy", { locale: ptBR})}. A localização atual do usuário é São Paulo, e ele quer fazer a cotação para um Ford Ecosport. O usuário deseja fazer a cotação de um seguro hoje, formate a data em português.
+A data de hoje é ${format(new Date(), "d 'de' LLLL, yyyy", { locale: ptBR})}. A localização atual do usuário é São Paulo, e ele quer fazer a cotação de seguro automóvel. O usuário deseja fazer a cotação de um seguro hoje, formate a data em português.
 
-Liste apenas seguros do grupo Porto Seguro.
+Liste apenas seguradoras do grupo Porto Seguros.
 
 Aqui está o fluxo:
 
-Mostrar os destinos.
-Listar seguradoras de automóvel com as coberturas. Exemplo: Premium, Economico, etc.
+Listar seguradoras de automóvel.
 Escolher uma seguradora.
+Fazer o formulário com os dados.
 Escolher um plano da seguradora.
 Finalizar e assinar o plano.
 Mostrar o cartão de assinante.
@@ -287,35 +276,7 @@ Mostrar o cartão de assinante.
           })
         } else if (type === 'tool-call') {
           const { toolName, args } = delta
-
-          if (toolName === 'listDestinations') {
-            const { destinations } = args
-
-            uiStream.update(
-              <BotCard>
-                <Destinations destinations={destinations} />
-              </BotCard>
-            )
-
-            aiState.done({
-              ...aiState.get(),
-              interactions: [],
-              messages: [
-                ...aiState.get().messages,
-                {
-                  id: nanoid(),
-                  role: 'assistant',
-                  content: `Here's a list of holiday destinations based on the books you've read. Choose one to proceed to booking a flight. \n\n ${args.destinations.join(', ')}.`,
-                  display: {
-                    name: 'listDestinations',
-                    props: {
-                      destinations
-                    }
-                  }
-                }
-              ]
-            })
-          } else if (toolName === 'mostreSeguradoras') {
+          if (toolName === 'mostreSeguradoras') {
             aiState.done({
               ...aiState.get(),
               interactions: [],
@@ -341,7 +302,7 @@ Mostrar o cartão de assinante.
                 <ListFlights summary={args} />
               </BotCard>
             )
-          } else if (toolName === 'showSeatPicker') {
+          } else if (toolName === 'mostrarForms') {
             aiState.done({
               ...aiState.get(),
               interactions: [],
@@ -351,9 +312,9 @@ Mostrar o cartão de assinante.
                   id: nanoid(),
                   role: 'assistant',
                   content:
-                    "Here's a list of available seats for you to choose from. Select one to proceed to payment.",
+                    "Aqui está o formulário, precisamos apenas de algumas informações básicas para fazer a cotação.",
                   display: {
-                    name: 'showSeatPicker',
+                    name: 'mostrarForms',
                     props: {
                       summary: args
                     }
@@ -438,7 +399,7 @@ Mostrar o cartão de assinante.
                   id: nanoid(),
                   role: 'assistant',
                   content: `O status do seguro ${args.flightCode} é o seguinte:
-                Data: ${args.departingTime} from ${args.grupo} e (${args.linha})
+                Data: ${args.departingTime} do grupo de seguros ${args.grupo} e a cobertura (${args.linha})
                 `
                 }
               ],
